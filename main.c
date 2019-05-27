@@ -49,11 +49,11 @@ int main(int argc, char** argv) {
     // sort test
     testSortByPriorityFunction(notebook, allNotes);
 
-    // dispose(allNotes[0]);
-    // dispose(allNotes[1]);
-    // dispose(allNotes[2]);
+    dispose(allNotes[0]);
+    dispose(allNotes[1]);
+    dispose(allNotes[2]);
      
-    // free(allNotes);
+    free(allNotes);
     
 }
 

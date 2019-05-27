@@ -68,8 +68,6 @@ char* head(struct note *note) {
  * or line-break characters; words can also by separated by punctuation characters such as period '.' 
  */
 unsigned int getWordCount(struct note *note) {
-
-    // printf("%s\n", (*note).contents);
     char* content = (*note).contents;
     int count = 0;
     int i = 0;
@@ -84,7 +82,6 @@ unsigned int getWordCount(struct note *note) {
             count++;
         } 
     }
-
     return count;
 }
 
@@ -92,5 +89,5 @@ unsigned int getWordCount(struct note *note) {
  * Frees any memory associated with the given note.
  */
 void dispose(struct note *note) {
-    
+    free(note);
 }

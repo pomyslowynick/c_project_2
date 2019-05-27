@@ -148,9 +148,9 @@ void swap(struct node *a, struct node *b)
 { 
 // to swap two nodes in a linked link, just swap their data pointers 
 // leave the list node order as-is!
-    // struct node* temp = a; 
-    (*a).next = (*b).next; 
-    (*b).next = a; 
+    struct note* temp = (*a).data; 
+    (*a).data = (*b).data; 
+    (*b).data = temp; 
 } 
 
 
@@ -183,13 +183,11 @@ void sortByPriority(struct notebook *notebook) {
 
             // getNodeRank will get a numeric value from the node data
             int rankL = getPriority((*currentNode).data);
-            printf("%d rank L\n ", rankL);
             static int rankR = 100;
             if ((*currentNode).next != NULL) {
                 rankR = getPriority(currentNode->next->data);
 
             }
-            printf("%d rank R\n", rankR);
 
             // if nodes are out of order, swap them, set the done flag to false / 0
             if (rankL > rankR) { 
