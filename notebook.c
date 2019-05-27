@@ -1,5 +1,4 @@
 #include "notebook.h"
-// #include "note.h"
 #include "note.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,9 +22,9 @@ struct notebook {
  * of notes.
  */
 struct notebook* createNotebook() {
-    struct notebook *y = (struct notebook*)malloc(sizeof(struct notebook));
-    (*y).head = NULL;
-    return y;
+    struct notebook *notebookPtr = (struct notebook*)malloc(sizeof(struct notebook));
+    (*notebookPtr).head = NULL;
+    return notebookPtr;
 }
 
 /**
