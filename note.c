@@ -28,21 +28,21 @@ struct note* createNote(char *title, char *contents, int priority) {
  * value, the higher the priority of the note.
  */
 int getPriority(struct note *note) {
-    return (*note).priority;
+    return note->priority;
 }
 
 /**
  * Returns the title of the given note. 
  */
 char* getTitle(struct note *note) {
-    return (*note).title;
+    return note->title;
 }
 
 /**
  * Returns the contents of the given note. 
  */
 char* getContents(struct note *note) {
-    return (*note).contents;
+    return note->contents;
 }
 
 /**

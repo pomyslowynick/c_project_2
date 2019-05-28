@@ -23,7 +23,7 @@ struct notebook {
  */
 struct notebook* createNotebook() {
     struct notebook *notebookPtr = (struct notebook*)malloc(sizeof(struct notebook));
-    (*notebookPtr).head = NULL;
+    notebookPtr->head = NULL;
     return notebookPtr;
 }
 
@@ -31,19 +31,18 @@ struct notebook* createNotebook() {
  * Adds the given note to the end of the given notebook's note list.
  */
 void addNote(struct notebook *notebook, struct note *note) {
-    struct node *currentNode = (*notebook).head;
-    // printf("%d\n", (currentNode == NULL));
+    struct node *currentNode = notebook->head;
     struct node* newNode = (struct node*)malloc(1 * sizeof(struct node));
     (*newNode).data = note;
     (*newNode).next = NULL;
     if (currentNode == NULL) {
-        (*notebook).head = newNode;
+        notebook->head = newNode;
     }
     else {
-        while ((*currentNode).next != NULL) {
-            currentNode = (*currentNode).next;
+        while (currentNode->next != NULL) {
+            currentNode = currentNode->next;
         }
-        (*currentNode).next = newNode;
+        currentNode->next = newNode;
     }
 }
 
@@ -51,21 +50,21 @@ void addNote(struct notebook *notebook, struct note *note) {
  * Removes the given note from the given notebook's note list, if it is present.
  */
 void removeNote(struct notebook *notebook, struct note *note) {
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
     struct node *previousNode = NULL;
 
-    if((*currentNode).data == note) {
-        (*notebook).head = (*currentNode).next;
+    if(currentNode->data == note) {
+        notebook->head= currentNode->next;
     } else {
-        while((currentNode != NULL) && ((*currentNode).data != note)) {
+        while((currentNode != NULL) && (currentNode->data != note)) {
             previousNode = currentNode;
-            currentNode = (*currentNode).next;
+            currentNode = currentNode->next;
         }
         if(currentNode == NULL) {
             printf("There is no such note in notebook\n");
         }
         else {
-            (*previousNode).next = (*currentNode).next;
+            previousNode->next = currentNode->next;
             free(currentNode);
         }
     }
@@ -79,18 +78,16 @@ void removeNote(struct notebook *notebook, struct note *note) {
  * given string. If such a note exists, a pointer to same is returned; else this funcion returns NULL. 
  */
 struct note* findByContent(struct notebook *notebook, char *str) {
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
     while (currentNode != NULL) {
-        char *currentContents = getContents((*currentNode).data);
-        // printf("%s\n", currentTitle);
+        char *currentContents = getContents(currentNode->data);
         char *searchResult = strstr(currentContents, str);
 
         if(searchResult) {
-            return (*currentNode).data;
+            return currentNode->data;
         }
-        currentNode = (*currentNode).next;
+        currentNode = currentNode->next;
     }
-    // printf("%s\n", getTitle((*currentNode).data));
     return NULL;
 
 }
@@ -100,16 +97,14 @@ struct note* findByContent(struct notebook *notebook, char *str) {
  * given string. If such a note exists, a pointer to same is returned; else this funcion returns NULL. 
  */
 struct note* findByTitle(struct notebook *notebook, char *str) {
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
     while (currentNode != NULL) {
-        char *currentTitle = getTitle((*currentNode).data);
-        // printf("%s\n", currentTitle);
+        char *currentTitle = getTitle(currentNode->data);
         if(currentTitle == str) {
-            return (*currentNode).data;
+            return currentNode->data;
         }
-        currentNode = (*currentNode).next;
+        currentNode = currentNode->next;
     }
-    // printf("%s\n", getTitle((*currentNode).data));
     return NULL;
 
 }
@@ -119,10 +114,10 @@ struct note* findByTitle(struct notebook *notebook, char *str) {
  */
 int countNotes(struct notebook* notebook) {
     int i = 0;
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
 
     while (currentNode != NULL) {
-        currentNode = (*currentNode).next;
+        currentNode = currentNode->next;
         i++;
     }
     return i;
@@ -132,15 +127,15 @@ int countNotes(struct notebook* notebook) {
  * Removes all notes from the given notebook's note list.
  */
 void clearNotes(struct notebook *notebook) {
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
     struct node *nextNode = NULL;
     while (currentNode != NULL) {
-        nextNode = (*currentNode).next;
+        nextNode = currentNode->next;
         free(currentNode);
 
         currentNode = nextNode;
     }
-    (*notebook).head = NULL;
+    notebook->head = NULL;
 }
 
 void swap(struct node *a, struct node *b) 
@@ -160,7 +155,7 @@ void swap(struct node *a, struct node *b)
  */
 void sortByPriority(struct notebook *notebook) {
     // start at the first node pointed to by the list head
-    struct node *startNode = (*notebook).head;
+    struct node *startNode = notebook->head;
 
     // for an empty list, we have nothing to do
     if(!startNode) {
@@ -181,9 +176,9 @@ void sortByPriority(struct notebook *notebook) {
         while (currentNode != NULL) { 
 
             // getNodeRank will get a numeric value from the node data
-            int rankL = getPriority((*currentNode).data);
+            int rankL = getPriority(currentNode->data);
             static int rankR = 100;
-            if ((*currentNode).next != NULL) {
+            if (currentNode->next != NULL) {
                 rankR = getPriority(currentNode->next->data);
 
             }
@@ -205,10 +200,10 @@ void sortByPriority(struct notebook *notebook) {
  * this function it will return NULL.
  */
 struct note* getNoteAt(struct notebook *notebook, int index) {
-    struct node *currentNode = (*notebook).head;
+    struct node *currentNode = notebook->head;
     int currentIndex = 0;
     while ((currentNode != NULL) && (currentIndex < index)) {
-		currentNode = (*currentNode).next;
+		currentNode = currentNode->next;
 		currentIndex++;
 	}
 
@@ -216,7 +211,7 @@ struct note* getNoteAt(struct notebook *notebook, int index) {
         return NULL;
     }
 	else {
-        return (*currentNode).data;
+        return currentNode->data;
 	}
 
 }
